@@ -13,6 +13,7 @@ This project demonstrates how to use SonarQube's **Generic Test Data** and **Gen
 - `sonar-project.properties`: Configuration for the SonarQube scanner.
 - `scanner_debug.log`: Full verbose output from the SonarQube scanner for deep analysis.
 - `docker-compose.yml`: Spins up a local SonarQube and PostgreSQL instance.
+- `screenshots/`: Visual evidence of the SonarQube UI and results.
 
 ## Getting Started
 
@@ -37,6 +38,25 @@ docker run --rm \
   sonarsource/sonar-scanner-cli \
   -Dsonar.host.url=http://host.docker.internal:9000
 ```
+
+---
+
+## Visual Results & Observations
+
+### 1. Test Results Submitted
+![Test Results Submitted](screenshots/Screenshot_01_testresults_submitted.png)
+*Evidence of the successful submission and ingestion of generic test data into the SonarQube dashboard.*
+
+### 2. Python Test Results Detail
+![Python Tests Detail](screenshots/Screenshot_02_py_tests_whichonespassed.png)
+*Detailed view of Python test components.*
+
+### 3. Terraform Test Results Detail
+![Terraform Tests Detail](screenshots/Screenshot_03_tf_tests_whichonespassed.png)
+*Detailed view of Terraform test components.*
+
+### Conclusion
+**What we see is that SonarQube is not showing the unit test results per unit test, only at an overall file level.**
 
 ---
 
