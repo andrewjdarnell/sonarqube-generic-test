@@ -24,7 +24,20 @@ docker compose up -d
 ```
 Login at [http://localhost:9000](http://localhost:9000) (Default: `admin`/`admin`).
 
-### 2. Generate Reports
+### 2. Generate a Security Token
+You need a token to run the scanner. You can generate one via the UI or using the API:
+
+**Via API (Convenient for local testing):**
+```bash
+curl -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scanner-token"
+```
+*Note: Copy the `token` value from the JSON response and paste it into `sonar-project.properties`.*
+
+**Via UI:**
+1. Go to **My Account** (top right) -> **Security**.
+2. Under **Generate Token**, give it a name and click **Generate**.
+
+### 3. Generate Reports
 Run the generator script to create the `testExecutions` and `coverage` XML files:
 ```bash
 python3 generate_reports.py
