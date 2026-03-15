@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testExecutions version="1">
+  <file path="tests/test_math_ops.py">
+    <testCase name="test_success" duration="100" classname="tests.test_math_ops" />
+    <testCase name="test_failure" duration="200" classname="tests.test_math_ops">
+      <failure message="Assertion failed">Traceback detail...</failure>
+    </testCase>
+    <testCase name="test_skipped" duration="50" classname="tests.test_math_ops" />
+  </file>
+  <file path="tests/test_utils.py">
+    <testCase name="test_success" duration="100" classname="tests.test_utils" />
+    <testCase name="test_failure" duration="200" classname="tests.test_utils">
+      <failure message="Assertion failed">Traceback detail...</failure>
+    </testCase>
+    <testCase name="test_skipped" duration="50" classname="tests.test_utils" />
+  </file>
+  <file path="tests/test_advanced.py">
+    <testCase name="test_success" duration="100" classname="tests.test_advanced" />
+    <testCase name="test_failure" duration="200" classname="tests.test_advanced">
+      <failure message="Assertion failed">Traceback detail...</failure>
+    </testCase>
+    <testCase name="test_skipped" duration="50" classname="tests.test_advanced" />
+  </file>
+  <file path="terraform/tests/compliance_test.tf">
+    <testCase name="bucket_is_private" duration="150" classname="Terraform.ComplianceTests" />
+    <testCase name="versioning_is_enabled" duration="150" classname="Terraform.ComplianceTests" />
+    <testCase name="encryption_is_enabled" duration="300" classname="Terraform.ComplianceTests">
+      <failure message="Encryption missing">Error detail...</failure>
+    </testCase>
+    <testCase name="tags_are_present" duration="200" classname="Terraform.ComplianceTests">
+      <failure message="Tags missing">Error detail...</failure>
+    </testCase>
+  </file>
+  <file path="tests/test_terraform_dummy.py">
+    <testCase name="mapped_tf_test_success" duration="100" classname="DummyMapping" />
+    <testCase name="mapped_tf_test_failure" duration="200" classname="DummyMapping">
+      <failure message="Mapped failure">Mapped detail...</failure>
+    </testCase>
+  </file>
+</testExecutions>

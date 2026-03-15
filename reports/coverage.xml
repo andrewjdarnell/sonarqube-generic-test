@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<coverage version="1">
+  <file path="src/math_ops.py">
+    <lineToCover lineNumber="1" covered="true" />
+    <lineToCover lineNumber="2" covered="true" />
+    <lineToCover lineNumber="3" covered="true" />
+    <lineToCover lineNumber="4" covered="false" />
+    <lineToCover lineNumber="5" covered="false" />
+  </file>
+  <file path="src/utils.py">
+    <lineToCover lineNumber="1" covered="true" />
+    <lineToCover lineNumber="2" covered="true" />
+    <lineToCover lineNumber="3" covered="true" />
+    <lineToCover lineNumber="4" covered="true" />
+    <lineToCover lineNumber="5" covered="true" />
+    <lineToCover lineNumber="6" covered="false" />
+    <lineToCover lineNumber="7" covered="false" />
+  </file>
+  <file path="terraform/main.tf">
+    <lineToCover lineNumber="1" covered="true" />
+    <lineToCover lineNumber="2" covered="true" />
+    <lineToCover lineNumber="3" covered="true" />
+    <lineToCover lineNumber="4" covered="true" />
+    <lineToCover lineNumber="5" covered="true" />
+    <lineToCover lineNumber="6" covered="true" />
+    <lineToCover lineNumber="7" covered="false" />
+    <lineToCover lineNumber="8" covered="false" />
+  </file>
+</coverage>

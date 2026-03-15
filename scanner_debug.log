@@ -1,0 +1,389 @@
+18:09:10.265 INFO  Scanner configuration file: /opt/sonar-scanner/conf/sonar-scanner.properties
+18:09:10.269 INFO  Project root configuration file: /usr/src/sonar-project.properties
+18:09:10.289 INFO  SonarScanner CLI 8.0.1.6346
+18:09:10.291 DEBUG Java 21.0.9 Amazon.com Inc. (64-bit)
+18:09:10.297 INFO  Linux 6.12.72-linuxkit amd64
+18:09:10.303 DEBUG Scanner max available memory: 1 GB
+18:09:10.336 DEBUG uname -m returned 'x86_64'
+18:09:10.339 DEBUG Using JVM default truststore: /usr/lib/jvm/java-21-amazon-corretto.x86_64/lib/security/cacerts
+18:09:10.340 DEBUG Download cache base directory: /opt/sonar-scanner/.sonar/cache
+18:09:10.340 DEBUG Create: /opt/sonar-scanner/.sonar/cache/_tmp
+18:09:10.457 DEBUG Loading OS trusted SSL certificates...
+18:09:10.458 DEBUG This operation might be slow or even get stuck. You can skip it by passing the scanner property 'sonar.scanner.skipSystemTruststore=true'
+18:09:10.793 DEBUG Loaded [143] system trusted certificates
+18:09:11.224 DEBUG Loaded truststore from '/usr/lib/jvm/java-21-amazon-corretto.x86_64/lib/security/cacerts' containing 143 certificates
+18:09:11.349 DEBUG --> GET http://host.docker.internal:9000/api/v2/analysis/version
+18:09:11.526 DEBUG <-- 200 http://host.docker.internal:9000/api/v2/analysis/version (176ms)
+18:09:11.526 INFO  Communicating with SonarQube Community Build 26.3.0.120487
+18:09:11.527 INFO  JRE provisioning: os[linux], arch[x86_64]
+18:09:11.528 DEBUG --> GET http://host.docker.internal:9000/api/v2/analysis/jres?os=linux&arch=x86_64
+18:09:11.597 DEBUG <-- 200 http://host.docker.internal:9000/api/v2/analysis/jres?os=linux&arch=x86_64 (69ms)
+18:09:11.632 DEBUG Download http://host.docker.internal:9000/api/v2/analysis/jres/cf5ae9d5-5e4c-4f76-bbe8-e574f469bdf5 to /opt/sonar-scanner/.sonar/cache/_tmp/OpenJDK21U-jre_x64_linux_hotspot_21.0.9_10.tar1264517713561288799gz
+18:09:11.632 DEBUG --> GET http://host.docker.internal:9000/api/v2/analysis/jres/cf5ae9d5-5e4c-4f76-bbe8-e574f469bdf5
+18:09:12.310 DEBUG <-- 200 http://host.docker.internal:9000/api/v2/analysis/jres/cf5ae9d5-5e4c-4f76-bbe8-e574f469bdf5 (678ms)
+18:09:12.502 DEBUG Create: /opt/sonar-scanner/.sonar/cache/aeab55d064a1a27a3744b0880b9b414077b4ed2b1790817eea3df60aec946431
+18:09:13.269 DEBUG Executing: /opt/sonar-scanner/.sonar/cache/aeab55d064a1a27a3744b0880b9b414077b4ed2b1790817eea3df60aec946431/OpenJDK21U-jre_x64_linux_hotspot_21.0.9_10.tar.gz_extracted/jdk-21.0.9+10-jre/bin/java --version
+18:09:13.298 DEBUG openjdk 21.0.9 2025-10-21 LTS
+18:09:13.299 DEBUG OpenJDK Runtime Environment Temurin-21.0.9+10 (build 21.0.9+10-LTS)
+18:09:13.299 DEBUG OpenJDK 64-Bit Server VM Temurin-21.0.9+10 (build 21.0.9+10-LTS, mixed mode, sharing)
+18:09:13.304 DEBUG --> GET http://host.docker.internal:9000/api/v2/analysis/engine
+18:09:13.508 DEBUG <-- 200 http://host.docker.internal:9000/api/v2/analysis/engine (203ms)
+18:09:13.510 DEBUG Download http://host.docker.internal:9000/api/v2/analysis/engine to /opt/sonar-scanner/.sonar/cache/_tmp/sonar-scanner-engine-shaded-26.3.0.120487-all12301253214991928115jar
+18:09:13.511 DEBUG --> GET http://host.docker.internal:9000/api/v2/analysis/engine
+18:09:14.143 DEBUG <-- 200 http://host.docker.internal:9000/api/v2/analysis/engine (632ms)
+18:09:14.297 DEBUG Create: /opt/sonar-scanner/.sonar/cache/6638ba85ce42e3932d84e2a6fa4e88da59fb6dc108749aa9079633593d82b651
+18:09:14.300 DEBUG Work directory: /tmp/.scannerwork
+18:09:14.307 DEBUG Executing: /opt/sonar-scanner/.sonar/cache/aeab55d064a1a27a3744b0880b9b414077b4ed2b1790817eea3df60aec946431/OpenJDK21U-jre_x64_linux_hotspot_21.0.9_10.tar.gz_extracted/jdk-21.0.9+10-jre/bin/java -Dorg.bouncycastle.pkcs12.ignore_useless_passwd=true -jar /opt/sonar-scanner/.sonar/cache/6638ba85ce42e3932d84e2a6fa4e88da59fb6dc108749aa9079633593d82b651/sonar-scanner-engine-shaded-26.3.0.120487-all.jar
+18:09:14.613 INFO  Starting SonarScanner Engine...
+18:09:14.614 INFO  Java 21.0.9 Eclipse Adoptium (64-bit)
+18:09:14.670 DEBUG JVM max available memory: 1 GB
+18:09:14.810 DEBUG Community 26.3.0.120487
+18:09:14.992 DEBUG Sonar User Home: /opt/sonar-scanner/.sonar
+18:09:15.111 DEBUG Loading OS trusted SSL certificates...
+18:09:15.111 DEBUG This operation might be slow or even get stuck. You can skip it by passing the scanner property 'sonar.scanner.skipSystemTruststore=true'
+18:09:15.466 DEBUG Loaded [143] system trusted certificates
+18:09:15.865 DEBUG Loaded truststore from '/usr/lib/jvm/java-21-amazon-corretto.x86_64/lib/security/cacerts' containing 143 certificates
+18:09:16.048 INFO  Load global settings
+18:09:16.057 DEBUG --> GET http://host.docker.internal:9000/api/settings/values.protobuf
+18:09:16.157 DEBUG <-- 200 http://host.docker.internal:9000/api/settings/values.protobuf (99ms, 7177-byte body)
+18:09:16.184 INFO  Load global settings (done) | time=136ms
+18:09:16.187 INFO  Server id: 4820B276-AZzyfGr23db0aNCgISmq
+18:09:16.194 DEBUG Create : /opt/sonar-scanner/.sonar/_tmp
+18:09:16.194 DEBUG User cache: /opt/sonar-scanner/.sonar/cache
+18:09:16.200 INFO  Loading required plugins
+18:09:16.201 INFO  Load plugins index
+18:09:16.202 DEBUG --> GET http://host.docker.internal:9000/api/plugins/installed
+18:09:16.316 DEBUG <-- 200 http://host.docker.internal:9000/api/plugins/installed (114ms, unknown-length body)
+18:09:16.324 INFO  Load plugins index (done) | time=124ms
+18:09:16.325 INFO  Load/download plugins
+18:09:16.327 DEBUG Download plugin 'cayc' to '/opt/sonar-scanner/.sonar/_tmp/fileCache16885274833920945717.tmp'
+18:09:16.328 DEBUG --> GET http://host.docker.internal:9000/api/plugins/download?plugin=cayc
+18:09:16.336 DEBUG <-- 200 http://host.docker.internal:9000/api/plugins/download?plugin=cayc (7ms, unknown-length body)
+18:09:16.398 DEBUG Download plugin 'iac' to '/opt/sonar-scanner/.sonar/_tmp/fileCache7452269010534885396.tmp'
+18:09:16.398 DEBUG --> GET http://host.docker.internal:9000/api/plugins/download?plugin=iac
+18:09:16.406 DEBUG <-- 200 http://host.docker.internal:9000/api/plugins/download?plugin=iac (7ms, unknown-length body)
+18:09:16.764 DEBUG Download plugin 'text' to '/opt/sonar-scanner/.sonar/_tmp/fileCache3242122380423213229.tmp'
+18:09:16.764 DEBUG --> GET http://host.docker.internal:9000/api/plugins/download?plugin=text
+18:09:16.772 DEBUG <-- 200 http://host.docker.internal:9000/api/plugins/download?plugin=text (7ms, unknown-length body)
+18:09:16.888 INFO  Load/download plugins (done) | time=563ms
+18:09:16.888 DEBUG Plugins not loaded because they are optional: [csharp, flex, go, web, jacoco, javasymbolicexecution, java, javascript, kotlin, php, python, ruby, rust, sonarscala, vbnet, xml]
+18:09:16.908 DEBUG Plugins loaded:
+18:09:16.908 DEBUG   * Clean as You Code 2.6.0.3665 (cayc)
+18:09:16.909 DEBUG   * IaC Code Quality and Security 2.6.1.19203 (iac)
+18:09:16.909 DEBUG   * Text Code Quality and Security 2.41.0.10709 (text)
+18:09:17.038 DEBUG register org.eclipse.jgit.util.FS$FileStoreAttributes$$Lambda/0x00007f5e7830bbc0@4e1ce44 with shutdown hook
+18:09:17.190 INFO  Process project properties
+18:09:17.200 INFO  Process project properties (done) | time=10ms
+18:09:17.214 INFO  Project key: sonarqube-generic-test
+18:09:17.215 INFO  Base dir: /usr/src
+18:09:17.215 INFO  Working dir: /tmp/.scannerwork
+18:09:17.215 DEBUG Project global encoding: UTF-8, default locale: en
+18:09:17.243 INFO  Load project settings for component key: 'sonarqube-generic-test'
+18:09:17.244 DEBUG --> GET http://host.docker.internal:9000/api/settings/values.protobuf?component=sonarqube-generic-test
+18:09:17.270 DEBUG <-- 200 http://host.docker.internal:9000/api/settings/values.protobuf?component=sonarqube-generic-test (26ms, 7187-byte body)
+18:09:17.272 INFO  Load project settings for component key: 'sonarqube-generic-test' (done) | time=30ms
+18:09:17.283 DEBUG Creating module hierarchy
+18:09:17.284 DEBUG   Init module 'SonarQube Generic Test'
+18:09:17.284 DEBUG     Base dir: /usr/src
+18:09:17.285 DEBUG     Working dir: /tmp/.scannerwork
+18:09:17.285 DEBUG     Module global encoding: UTF-8, default locale: en
+18:09:17.297 INFO  Load quality profiles
+18:09:17.298 DEBUG --> GET http://host.docker.internal:9000/api/qualityprofiles/search.protobuf?project=sonarqube-generic-test
+18:09:17.356 DEBUG <-- 200 http://host.docker.internal:9000/api/qualityprofiles/search.protobuf?project=sonarqube-generic-test (57ms, 3220-byte body)
+18:09:17.371 INFO  Load quality profiles (done) | time=74ms
+18:09:17.411 WARN  SCM provider autodetection failed. Please use "sonar.scm.provider" to define SCM of your project, or disable the SCM Sensor in the project settings.
+18:09:17.434 INFO  Load active rules
+18:09:17.435 DEBUG --> GET http://host.docker.internal:9000/api/v2/analysis/active_rules?projectKey=sonarqube-generic-test
+18:09:17.631 DEBUG <-- 200 http://host.docker.internal:9000/api/v2/analysis/active_rules?projectKey=sonarqube-generic-test (196ms, unknown-length body)
+18:09:17.797 INFO  Load active rules (done) | time=363ms
+18:09:17.805 INFO  Load analysis cache
+18:09:17.805 DEBUG --> GET http://host.docker.internal:9000/api/analysis_cache/get?project=sonarqube-generic-test
+18:09:17.825 DEBUG <-- 200 http://host.docker.internal:9000/api/analysis_cache/get?project=sonarqube-generic-test (19ms, 1891-byte body)
+18:09:17.831 INFO  Load analysis cache (1.9 kB) | time=26ms
+18:09:17.864 DEBUG --> GET http://host.docker.internal:9000/api/languages/list
+18:09:17.873 DEBUG <-- 200 http://host.docker.internal:9000/api/languages/list (8ms, unknown-length body)
+18:09:17.883 DEBUG --> GET http://host.docker.internal:9000/api/features/list
+18:09:17.889 DEBUG <-- 200 http://host.docker.internal:9000/api/features/list (6ms, unknown-length body)
+18:09:17.893 DEBUG Unable to get git remote origin URL
+Not inside a Git work tree: /usr/src
+
+18:09:17.893 DEBUG Git remote origin URL telemetry: UNDETECTED
+18:09:17.907 DEBUG Declared patterns of language Kubernetes were converted to sonar.lang.patterns.kubernetes : 
+18:09:17.907 DEBUG Declared patterns of language CSS were converted to sonar.lang.patterns.css : **/*.css,**/*.less,**/*.scss,**/*.sass
+18:09:17.907 DEBUG Declared patterns of language Scala were converted to sonar.lang.patterns.scala : **/*.scala
+18:09:17.908 DEBUG Declared patterns of language JSP were converted to sonar.lang.patterns.jsp : **/*.jsp,**/*.jspf,**/*.jspx
+18:09:17.908 DEBUG Declared patterns of language JavaScript were converted to sonar.lang.patterns.js : **/*.js,**/*.jsx,**/*.cjs,**/*.mjs,**/*.vue
+18:09:17.908 DEBUG Declared patterns of language Python were converted to sonar.lang.patterns.py : **/*.py
+18:09:17.909 DEBUG Declared patterns of language Docker were converted to sonar.lang.patterns.docker : **/*.dockerfile,**/Dockerfile,**/dockerfile
+18:09:17.909 DEBUG Declared patterns of language Rust were converted to sonar.lang.patterns.rust : **/*.rs
+18:09:17.909 DEBUG Declared patterns of language Java were converted to sonar.lang.patterns.java : **/*.java,**/*.jav
+18:09:17.910 DEBUG Declared patterns of language HTML were converted to sonar.lang.patterns.web : **/*.html,**/*.xhtml,**/*.cshtml,**/*.vbhtml,**/*.aspx,**/*.ascx,**/*.rhtml,**/*.erb,**/*.shtm,**/*.shtml,**/*.cmp,**/*.twig,**/*.htm
+18:09:17.910 DEBUG Declared patterns of language Flex were converted to sonar.lang.patterns.flex : **/*.as
+18:09:17.911 DEBUG Declared patterns of language XML were converted to sonar.lang.patterns.xml : **/*.xml,**/*.xsd,**/*.xsl,**/*.config
+18:09:17.911 DEBUG Declared patterns of language JSON were converted to sonar.lang.patterns.json : **/*.json
+18:09:17.911 DEBUG Declared patterns of language IPython Notebooks were converted to sonar.lang.patterns.ipynb : **/*.ipynb
+18:09:17.912 DEBUG Declared patterns of language Text were converted to sonar.lang.patterns.text : 
+18:09:17.912 DEBUG Declared patterns of language VB.NET were converted to sonar.lang.patterns.vbnet : **/*.vb
+18:09:17.912 DEBUG Declared patterns of language CloudFormation were converted to sonar.lang.patterns.cloudformation : 
+18:09:17.912 DEBUG Declared patterns of language YAML were converted to sonar.lang.patterns.yaml : **/*.yaml,**/*.yml
+18:09:17.913 DEBUG Declared patterns of language Go were converted to sonar.lang.patterns.go : **/*.go
+18:09:17.913 DEBUG Declared patterns of language Kotlin were converted to sonar.lang.patterns.kotlin : **/*.kt,**/*.kts
+18:09:17.914 DEBUG Declared patterns of language Secrets were converted to sonar.lang.patterns.secrets : 
+18:09:17.914 DEBUG Declared patterns of language Ruby were converted to sonar.lang.patterns.ruby : **/*.rb
+18:09:17.914 DEBUG Declared patterns of language C# were converted to sonar.lang.patterns.cs : **/*.cs,**/*.razor
+18:09:17.914 DEBUG Declared patterns of language PHP were converted to sonar.lang.patterns.php : **/*.php,**/*.php3,**/*.php4,**/*.php5,**/*.phtml,**/*.inc
+18:09:17.915 DEBUG Declared patterns of language Terraform were converted to sonar.lang.patterns.terraform : **/*.tf
+18:09:17.915 DEBUG Declared patterns of language Azure Resource Manager were converted to sonar.lang.patterns.azureresourcemanager : **/*.bicep
+18:09:17.915 DEBUG Declared patterns of language TypeScript were converted to sonar.lang.patterns.ts : **/*.ts,**/*.tsx,**/*.cts,**/*.mts
+18:09:17.927 INFO  Preprocessing files...
+18:09:17.962 INFO  2 languages detected in 8 preprocessed files (done) | time=34ms
+18:09:17.962 INFO  20 files ignored because of inclusion/exclusion patterns
+18:09:17.965 INFO  Loading plugins for detected languages
+18:09:17.965 DEBUG Detected languages: [py, terraform]
+18:09:17.965 INFO  Load/download plugins
+18:09:17.966 DEBUG Download plugin 'python' to '/opt/sonar-scanner/.sonar/_tmp/fileCache17868735817626395449.tmp'
+18:09:17.966 DEBUG --> GET http://host.docker.internal:9000/api/plugins/download?plugin=python
+18:09:17.973 DEBUG <-- 200 http://host.docker.internal:9000/api/plugins/download?plugin=python (6ms, unknown-length body)
+18:09:18.239 INFO  Load/download plugins (done) | time=274ms
+18:09:18.239 DEBUG Optional language-specific plugins not loaded: [csharp, flex, go, web, jacoco, javasymbolicexecution, java, javascript, kotlin, php, ruby, rust, sonarscala, vbnet, xml]
+18:09:18.249 DEBUG Plugins loaded:
+18:09:18.249 DEBUG   * Python Code Quality and Security 5.18.0.31561 (python)
+18:09:18.314 INFO  Load project repositories
+18:09:18.314 DEBUG --> GET http://host.docker.internal:9000/batch/project.protobuf?key=sonarqube-generic-test
+18:09:18.339 DEBUG <-- 200 http://host.docker.internal:9000/batch/project.protobuf?key=sonarqube-generic-test (24ms, 490-byte body)
+18:09:18.414 INFO  Load project repositories (done) | time=99ms
+18:09:18.456 DEBUG Available languages:
+18:09:18.457 DEBUG   * Python => "py"
+18:09:18.457 DEBUG   * IPython Notebooks => "ipynb"
+18:09:18.458 DEBUG   * Terraform => "terraform"
+18:09:18.459 DEBUG   * CloudFormation => "cloudformation"
+18:09:18.460 DEBUG   * Kubernetes => "kubernetes"
+18:09:18.461 DEBUG   * Docker => "docker"
+18:09:18.461 DEBUG   * Azure Resource Manager => "azureresourcemanager"
+18:09:18.463 DEBUG   * YAML => "yaml"
+18:09:18.464 DEBUG   * JSON => "json"
+18:09:18.465 DEBUG   * Text => "text"
+18:09:18.467 DEBUG   * Secrets => "secrets"
+18:09:18.478 INFO  Indexing files...
+18:09:18.478 INFO  Project configuration:
+18:09:18.479 INFO    Included sources: src/**/*.py, terraform/main.tf
+18:09:18.479 INFO    Excluded sources: reports/**, generate_reports.py, docker-compose.yml, tests/**/*.py, terraform/tests/**/*.tf
+18:09:18.479 INFO    Included tests: tests/**/*.py, terraform/tests/**/*.tf
+18:09:18.485 DEBUG 'terraform/main.tf' indexed with language 'terraform'
+18:09:18.488 DEBUG 'src/utils.py' indexed with language 'py'
+18:09:18.488 DEBUG 'src/math_ops.py' indexed with language 'py'
+18:09:18.488 DEBUG 'terraform/tests/compliance_test.tf' indexed as test with language 'terraform'
+18:09:18.489 DEBUG 'tests/test_utils.py' indexed as test with language 'py'
+18:09:18.489 DEBUG 'tests/test_advanced.py' indexed as test with language 'py'
+18:09:18.490 DEBUG 'tests/test_terraform_dummy.py' indexed as test with language 'py'
+18:09:18.490 DEBUG 'tests/test_math_ops.py' indexed as test with language 'py'
+18:09:18.491 INFO  8 files indexed (done) | time=12ms
+18:09:18.492 INFO  Quality profile for py: Sonar way
+18:09:18.492 INFO  Quality profile for terraform: Sonar way
+18:09:18.492 INFO  ------------- Run sensors on module SonarQube Generic Test
+18:09:18.532 INFO  Load metrics repository
+18:09:18.533 DEBUG --> GET http://host.docker.internal:9000/api/metrics/search?ps=500&p=1
+18:09:18.553 DEBUG <-- 200 http://host.docker.internal:9000/api/metrics/search?ps=500&p=1 (19ms, unknown-length body)
+18:09:18.566 INFO  Load metrics repository (done) | time=35ms
+18:09:19.085 DEBUG 'Import external issues report' skipped because of missing configuration requirements.
+Accessed configuration:
+- sonar.externalIssuesReportPaths: <empty>
+18:09:19.088 DEBUG 'IaC CloudFormation Sensor' skipped because there is no related file in current project
+18:09:19.088 DEBUG 'IaC cfn-lint report Sensor' skipped because there is no related file in current project
+18:09:19.089 DEBUG 'IaC Kustomization Sensor' skipped because there is no related file in current project
+18:09:19.089 DEBUG 'IaC Azure Resource Manager Sensor' skipped because there is no related file in current project
+18:09:19.090 DEBUG 'IPython Notebooks Sensor' skipped because there is no related file in current project
+18:09:19.091 DEBUG 'Import of Pylint issues' skipped because of missing configuration requirements.
+Accessed configuration:
+- sonar.python.pylint.reportPath: <empty>
+- sonar.python.pylint.reportPaths: <empty>
+- sonar.externalIssuesReportPaths: <empty>
+18:09:19.092 DEBUG 'Import of Bandit issues' skipped because of missing configuration requirements.
+Accessed configuration:
+- sonar.python.bandit.reportPaths: <empty>
+- sonar.python.pylint.reportPath: <empty>
+- sonar.python.pylint.reportPaths: <empty>
+- sonar.externalIssuesReportPaths: <empty>
+18:09:19.092 DEBUG 'Import of Flake8 issues' skipped because of missing configuration requirements.
+Accessed configuration:
+- sonar.python.bandit.reportPaths: <empty>
+- sonar.python.flake8.reportPaths: <empty>
+- sonar.python.pylint.reportPath: <empty>
+- sonar.python.pylint.reportPaths: <empty>
+- sonar.externalIssuesReportPaths: <empty>
+18:09:19.092 DEBUG 'Import of Mypy issues' skipped because of missing configuration requirements.
+Accessed configuration:
+- sonar.python.bandit.reportPaths: <empty>
+- sonar.python.flake8.reportPaths: <empty>
+- sonar.python.mypy.reportPaths: <empty>
+- sonar.python.pylint.reportPath: <empty>
+- sonar.python.pylint.reportPaths: <empty>
+- sonar.externalIssuesReportPaths: <empty>
+18:09:19.093 DEBUG 'Import of Ruff issues' skipped because of missing configuration requirements.
+Accessed configuration:
+- sonar.python.ruff.reportPaths: <empty>
+- sonar.python.bandit.reportPaths: <empty>
+- sonar.python.flake8.reportPaths: <empty>
+- sonar.python.mypy.reportPaths: <empty>
+- sonar.python.pylint.reportPath: <empty>
+- sonar.python.pylint.reportPaths: <empty>
+- sonar.externalIssuesReportPaths: <empty>
+18:09:19.094 DEBUG 'IaC Kubernetes Sensor' skipped because there is no related file in current project
+18:09:19.096 DEBUG Sensors : IaC Terraform Sensor -> IaC TFLint report Sensor -> IaC hadolint report Sensor -> Java Config Sensor -> IaC Docker Sensor -> Python Sensor -> Cobertura Sensor for Python coverage -> PythonXUnitSensor -> Python Dependency Sensor -> Generic Test Executions Report -> TextAndSecretsSensor
+18:09:19.097 INFO  Sensor IaC Terraform Sensor [iac]
+18:09:19.177 INFO  1 source file to be analyzed
+18:09:19.181 DEBUG 'terraform/main.tf' generated metadata with charset 'UTF-8'
+18:09:19.245 INFO  1/1 source file has been analyzed
+18:09:19.245 INFO  Sensor IaC Terraform Sensor [iac] (done) | time=149ms
+18:09:19.245 INFO  Sensor IaC TFLint report Sensor [iac]
+18:09:19.246 INFO  Sensor IaC TFLint report Sensor [iac] (done) | time=0ms
+18:09:19.246 INFO  Sensor IaC hadolint report Sensor [iac]
+18:09:19.246 INFO  Sensor IaC hadolint report Sensor [iac] (done) | time=0ms
+18:09:19.246 INFO  Sensor Java Config Sensor [iac]
+18:09:19.250 INFO  There are no files to be analyzed for the Java language
+18:09:19.251 INFO  Sensor Java Config Sensor [iac] (done) | time=4ms
+18:09:19.251 INFO  Sensor IaC Docker Sensor [iac]
+18:09:19.251 DEBUG Sensor IaC Docker Sensor is allowed to analyze hidden files
+18:09:19.251 INFO  There are no files to be analyzed for the Docker language
+18:09:19.251 INFO  Sensor IaC Docker Sensor [iac] (done) | time=1ms
+18:09:19.252 INFO  Sensor Python Sensor [python]
+18:09:19.442 DEBUG Resolved package roots from build configuration: []
+18:09:19.443 DEBUG Resolved package roots from fallback (sonar.sources or conventional folders): [/usr/src/.]
+18:09:19.451 DEBUG Input files for indexing: [tests/test_advanced.py, tests/test_utils.py, src/math_ops.py, tests/test_terraform_dummy.py, tests/test_math_ops.py, src/utils.py]
+18:09:19.459 INFO  Starting global symbols computation
+18:09:19.460 DEBUG Scanning global symbols in 6 threads
+18:09:19.462 INFO  6 source files to be analyzed
+18:09:19.468 DEBUG 'tests/test_terraform_dummy.py' generated metadata as test  with charset 'UTF-8'
+18:09:19.469 DEBUG 'src/math_ops.py' generated metadata with charset 'UTF-8'
+18:09:19.469 DEBUG 'tests/test_advanced.py' generated metadata as test  with charset 'UTF-8'
+18:09:19.469 DEBUG 'tests/test_utils.py' generated metadata as test  with charset 'UTF-8'
+18:09:19.470 DEBUG 'tests/test_math_ops.py' generated metadata as test  with charset 'UTF-8'
+18:09:19.470 DEBUG 'src/utils.py' generated metadata with charset 'UTF-8'
+18:09:19.711 INFO  6/6 source files have been analyzed
+18:09:19.713 INFO  Finished step global symbols computation in 252ms
+18:09:19.734 INFO  Starting rules execution
+18:09:19.735 INFO  6 source files to be analyzed
+18:09:19.736 DEBUG Scanning files in 6 threads
+18:09:20.235 DEBUG Not enough content in 'src/math_ops.py' to have CPD blocks, it will not be part of the duplication detection
+18:09:20.294 DEBUG Not enough content in 'src/utils.py' to have CPD blocks, it will not be part of the duplication detection
+18:09:20.302 INFO  6/6 source files have been analyzed
+18:09:20.302 INFO  Finished step rules execution in 567ms
+18:09:20.302 INFO  The Python analyzer was able to leverage cached data from previous analyses for 0 out of 6 files. These files were not parsed.
+18:09:20.304 DEBUG Collected metric: PYTHON_VERSION_SET_KEY=1
+18:09:20.304 DEBUG Collected metric: PYTHON_VERSION_KEY=3
+18:09:20.305 DEBUG Collected metric: PYTHON_DATABRICKS_FOUND=0
+18:09:20.305 DEBUG Collected metric: NOSONAR_RULE_ID_KEY=
+18:09:20.305 DEBUG Collected metric: NOSONAR_COMMENTS_KEY=
+18:09:20.305 DEBUG Collected metric: ANALYSIS_THREADS_KEY=6
+18:09:20.306 DEBUG Collected metric: ANALYSIS_DURATION_KEY=1
+18:09:20.306 DEBUG Collected metric: PYTHON_NUMBER_OF_FILES_KEY=6
+18:09:20.306 DEBUG Collected metric: PYTHON_PACKAGES_WITH_INIT=0
+18:09:20.306 DEBUG Collected metric: PYTHON_PACKAGES_WITHOUT_INIT=2
+18:09:20.306 DEBUG Collected metric: PYTHON_DUPLICATE_PACKAGES_WITHOUT_INIT=0
+18:09:20.307 DEBUG Collected metric: PYTHON_NAMESPACE_PACKAGES_IN_REGULAR_PACKAGE=0
+18:09:20.307 DEBUG Collected metric: PYTHON_PACKAGE_RESOLVED_VIA_PYPROJECT_TOML=0
+18:09:20.307 DEBUG Collected metric: PYTHON_PACKAGE_RESOLVED_VIA_SETUP_PY=0
+18:09:20.307 DEBUG Collected metric: PYTHON_PACKAGE_RESOLVED_VIA_SONAR_SOURCES=1
+18:09:20.308 DEBUG Collected metric: PYTHON_PACKAGE_RESOLVED_VIA_CONVENTIONAL_FOLDERS=0
+18:09:20.308 DEBUG Collected metric: PYTHON_PACKAGE_RESOLVED_VIA_BASE_DIR=0
+18:09:20.308 DEBUG Collected metric: PYTHON_PACKAGE_BUILD_SYSTEM_SETUPTOOLS=0
+18:09:20.309 DEBUG Collected metric: PYTHON_PACKAGE_BUILD_SYSTEM_POETRY=0
+18:09:20.309 DEBUG Collected metric: PYTHON_PACKAGE_BUILD_SYSTEM_HATCHLING=0
+18:09:20.309 DEBUG Collected metric: PYTHON_PACKAGE_BUILD_SYSTEM_UV_BUILD=0
+18:09:20.309 DEBUG Collected metric: PYTHON_PACKAGE_BUILD_SYSTEM_PDM=0
+18:09:20.310 DEBUG Collected metric: PYTHON_PACKAGE_BUILD_SYSTEM_FLIT=0
+18:09:20.310 DEBUG Collected metric: PYTHON_TYPES_NAMES_TOTAL=77
+18:09:20.310 DEBUG Collected metric: PYTHON_TYPES_NAMES_UNKNOWN=21
+18:09:20.311 DEBUG Collected metric: PYTHON_TYPES_NAMES_UNRESOLVED_IMPORT=9
+18:09:20.311 DEBUG Collected metric: PYTHON_TYPES_IMPORTS_TOTAL=7
+18:09:20.311 DEBUG Collected metric: PYTHON_TYPES_IMPORTS_UNKNOWN=4
+18:09:20.311 DEBUG Collected metric: PYTHON_TYPES_SYMBOLS_UNIQUE=36
+18:09:20.312 DEBUG Collected metric: PYTHON_TYPES_SYMBOLS_UNKNOWN=12
+18:09:20.312 DEBUG Collected metric: PYTHON_MAIN_FILES_TOTAL=2
+18:09:20.312 DEBUG Collected metric: PYTHON_LINES_TOTAL=50
+18:09:20.312 DEBUG Collected metric: PYTHON_MAIN_LINES=14
+18:09:20.312 DEBUG Collected metric: PYTHON_TEST_LINES=36
+18:09:20.312 DEBUG Collected metric: PYTHON_MAIN_FILES_MISCLASSIFIED_IMPORT_BASED=0
+18:09:20.313 DEBUG Collected metric: PYTHON_MAIN_LINES_MISCLASSIFIED_IMPORT_BASED=0
+18:09:20.313 DEBUG Collected metric: PYTHON_MAIN_FILES_MISCLASSIFIED_PATH_BASED=0
+18:09:20.313 DEBUG Collected metric: PYTHON_MAIN_LINES_MISCLASSIFIED_PATH_BASED=0
+18:09:20.313 DEBUG Collected metric: PYTHON_MAIN_FILES_MISCLASSIFIED_IMPORT_BASED_ONLY=0
+18:09:20.314 DEBUG Collected metric: PYTHON_MAIN_LINES_MISCLASSIFIED_IMPORT_BASED_ONLY=0
+18:09:20.314 DEBUG Collected metric: PYTHON_MAIN_FILES_MISCLASSIFIED_PATH_BASED_ONLY=0
+18:09:20.314 DEBUG Collected metric: PYTHON_MAIN_LINES_MISCLASSIFIED_PATH_BASED_ONLY=0
+18:09:20.314 DEBUG Collected metric: PYTHON_SONAR_TESTS_SET=1
+18:09:20.315 INFO  Sensor Python Sensor [python] (done) | time=1055ms
+18:09:20.315 INFO  Sensor Cobertura Sensor for Python coverage [python]
+18:09:20.315 DEBUG Using pattern 'coverage-reports/*coverage-*.xml' to find reports
+18:09:20.315 DEBUG No report was found for sonar.python.coverage.reportPaths using default pattern coverage-reports/*coverage-*.xml
+18:09:20.315 INFO  Sensor Cobertura Sensor for Python coverage [python] (done) | time=8ms
+18:09:20.316 INFO  Sensor PythonXUnitSensor [python]
+18:09:20.316 DEBUG Using pattern 'xunit-reports/xunit-result-*.xml' to find reports
+18:09:20.319 DEBUG No report was found for sonar.python.xunit.reportPath using default pattern xunit-reports/xunit-result-*.xml
+18:09:20.320 INFO  Sensor PythonXUnitSensor [python] (done) | time=5ms
+18:09:20.320 INFO  Sensor Python Dependency Sensor [python]
+18:09:20.325 DEBUG Collected metric: PYTHON_DEPENDENCIES=
+18:09:20.325 DEBUG Collected metric: PYTHON_DEPENDENCIES_FORMAT_VERSION=1
+18:09:20.325 INFO  Sensor Python Dependency Sensor [python] (done) | time=6ms
+18:09:20.325 INFO  Sensor Generic Test Executions Report
+18:09:20.326 INFO  Parsing /usr/src/reports/test-results.xml
+18:09:20.342 INFO  Imported test execution data for 5 files
+18:09:20.343 INFO  Sensor Generic Test Executions Report (done) | time=17ms
+18:09:20.343 INFO  Sensor TextAndSecretsSensor [text]
+18:09:20.343 DEBUG Sensor TextAndSecretsSensor is allowed to analyze hidden files
+18:09:20.351 INFO  Available processors: 16
+18:09:20.351 INFO  Using 16 threads for analysis.
+18:09:20.352 DEBUG Initializing SecretsStateContainer with specification loader.
+18:09:20.615 DEBUG Initializing ChecksContainer with checks and trie construction.
+18:09:20.622 DEBUG ChecksContainer initialized successfully with 4 checks without pre-filter and trie containing 61 patterns.
+18:09:20.624 INFO  Start fetching files for the text and secrets analysis
+18:09:20.633 DEBUG Read the "git --version" stdout in thread "pool-4-thread-1"
+18:09:20.634 DEBUG git --version returned: git version 2.50.1
+18:09:20.635 INFO  Using Git CLI to retrieve dirty files
+18:09:20.637 DEBUG Read the "git -C /usr/src status --untracked-files=all --porcelain" stdout in thread "pool-4-thread-1"
+18:09:20.639 DEBUG Process [git, -C, /usr/src, status, --untracked-files=all, --porcelain] exited with code 128
+18:09:20.639 DEBUG Unable to retrieve git status
+18:09:20.639 WARN  Retrieving only language associated files, make sure to run the analysis inside a git repository to make use of inclusions specified via "sonar.text.inclusions"
+18:09:20.640 INFO  Starting the text and secrets analysis
+18:09:20.641 INFO  8 source files to be analyzed for the text and secrets analysis
+18:09:20.645 DEBUG 'terraform/tests/compliance_test.tf' generated metadata as test  with charset 'UTF-8'
+18:09:20.657 INFO  8/8 source files have been analyzed for the text and secrets analysis
+18:09:20.657 DEBUG Analyzed files for the text and secrets analysis: 8
+18:09:20.658 DEBUG Unable to retrieve git status
+18:09:20.660 INFO  Sensor TextAndSecretsSensor [text] (done) | time=317ms
+18:09:20.664 INFO  ------------- Run sensors on project
+18:09:20.764 DEBUG 'Import external issues report from SARIF file.' skipped because of missing configuration requirements.
+Accessed configuration:
+- sonar.coverageReportPaths: reports/coverage.xml
+- sonar.sarifReportPaths: <empty>
+18:09:20.764 DEBUG 'Java CPD Block Indexer' skipped because there is no related file in current project
+18:09:20.764 DEBUG Sensors : Generic Coverage Report -> Zero Coverage Sensor
+18:09:20.764 INFO  Sensor Generic Coverage Report
+18:09:20.765 INFO  Parsing /usr/src/reports/coverage.xml
+18:09:20.774 INFO  Imported coverage data for 3 files
+18:09:20.775 INFO  Sensor Generic Coverage Report (done) | time=9ms
+18:09:20.775 INFO  Sensor Zero Coverage Sensor
+18:09:20.775 INFO  Sensor Zero Coverage Sensor (done) | time=1ms
+18:09:20.775 INFO  ------------- Gather SCA dependencies on project
+18:09:20.781 INFO  Dependency analysis skipped
+18:09:20.782 INFO  SCM Publisher No SCM system was detected. You can use the 'sonar.scm.provider' property to explicitly specify it.
+18:09:20.785 INFO  CPD Executor 2 files had no CPD blocks
+18:09:20.785 INFO  CPD Executor Calculating CPD for 0 files
+18:09:20.786 INFO  CPD Executor CPD calculation finished (done) | time=0ms
+18:09:20.876 INFO  Analysis report generated in 86ms, dir size=272.4 kB
+18:09:20.894 INFO  Analysis report compressed in 17ms, zip size=38.4 kB
+18:09:20.894 INFO  Analysis report generated in /tmp/.scannerwork/scanner-report
+18:09:20.894 DEBUG Upload report
+18:09:20.898 DEBUG --> POST http://host.docker.internal:9000/api/ce/submit?projectKey=sonarqube-generic-test&projectName=SonarQube%20Generic%20Test (38608-byte body)
+18:09:20.934 DEBUG <-- 200 http://host.docker.internal:9000/api/ce/submit?projectKey=sonarqube-generic-test&projectName=SonarQube%20Generic%20Test (36ms, 76-byte body)
+18:09:20.936 INFO  Analysis report uploaded in 42ms
+18:09:20.938 DEBUG Report metadata written to /tmp/.scannerwork/report-task.txt
+18:09:20.938 INFO  ANALYSIS SUCCESSFUL, you can find the results at: http://host.docker.internal:9000/dashboard?id=sonarqube-generic-test
+18:09:20.938 INFO  Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+18:09:20.938 INFO  More about the report processing at http://host.docker.internal:9000/api/ce/task?id=1cd38698-f567-4bb6-b611-c6eee5b02a9f
+18:09:20.941 DEBUG Post-jobs : 
+18:09:20.945 INFO  Analysis total time: 4.004 s
+18:09:20.946 INFO  SonarScanner Engine completed successfully
+18:09:20.980 DEBUG Cleanup org.eclipse.jgit.util.FS$FileStoreAttributes$$Lambda/0x00007f5e7830bbc0@4e1ce44 during JVM shutdown
+18:09:20.996 INFO  EXECUTION SUCCESS
+18:09:20.997 INFO  Total time: 10.737s
