@@ -24,6 +24,10 @@ coverage.xml
 # SonarQube
 .scannerwork/
 
+# Generated reports
+reports/*
+!reports/.gitkeep
+
 # OS specific
 .DS_Store
 .DS_Store?
