@@ -11,6 +11,7 @@ This project demonstrates how to use SonarQube's **Generic Test Data** and **Gen
 - `reports/`: Generated XML reports for SonarQube ingestion.
 - `generate_reports.py`: Python script to generate SonarQube-compatible XML.
 - `sonar-project.properties`: Configuration for the SonarQube scanner.
+- `scanner_debug.log`: Full verbose output from the SonarQube scanner for deep analysis.
 - `docker-compose.yml`: Spins up a local SonarQube and PostgreSQL instance.
 
 ## Getting Started
