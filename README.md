@@ -37,17 +37,14 @@ You need a token to run the scanner. You can generate one via the UI or using th
 
 **Via API (Convenient for local testing):**
 ```bash
-curl -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scanner-token"
+curl -u admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scanner-token"
 ```
 
+**Extract and save the token to .env using jq:**
 ```bash
-curl -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scanner-token" \
-| grep -o '\"token\":\"[^\"]*\"' \
-| cut -d':' -f2 \
-| tr -d '\"' \
-| xargs -I{} sh -c 'echo SONAR_TOKEN={} > .env'
+curl -u admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scanner-token" | jq -r '.token' | xargs -I{} sh -c 'echo SONAR_TOKEN={} > .env'
 ```
-*Note: Copy the `token` value from the JSON response and paste it into `sonar-project.properties`.*
+*Note: This command uses jq to cleanly extract the token from the JSON response and writes it to the .env file. You can then reference SONAR_TOKEN in your sonar-project.properties.*
 
 **Via UI:**
 1. Go to **My Account** (top right) -> **Security**.
