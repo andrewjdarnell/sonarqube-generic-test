@@ -18,10 +18,18 @@ This project demonstrates how to use SonarQube's **Generic Test Data** and **Gen
 ## Getting Started
 
 ### 1. Start SonarQube
-Ensure Docker Desktop is running, then start the environment:
+Ensure Docker Desktop or Podman is running, then start the environment:
+
+**With Docker Compose:**
 ```bash
 docker compose up -d
 ```
+
+**With Podman Compose:**
+```bash
+podman-compose up -d
+```
+
 Login at [http://localhost:9000](http://localhost:9000) (Default: `admin`/`admin`).
 
 ### 2. Generate a Security Token
@@ -31,11 +39,28 @@ You need a token to run the scanner. You can generate one via the UI or using th
 ```bash
 curl -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scanner-token"
 ```
+
+```bash
+curl -u admin:admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scanner-token" \
+| grep -o '\"token\":\"[^\"]*\"' \
+| cut -d':' -f2 \
+| tr -d '\"' \
+| xargs -I{} sh -c 'echo SONAR_TOKEN={} > .env'
+```
 *Note: Copy the `token` value from the JSON response and paste it into `sonar-project.properties`.*
 
 **Via UI:**
 1. Go to **My Account** (top right) -> **Security**.
 2. Under **Generate Token**, give it a name and click **Generate**.
+
+### Update Admin Password
+
+### Create Local Project
+sonar.projectKey=sonarqube-generic-test (Project Key)
+sonar.projectName=sonarqube-generic-test (Display Name)
+sonar.projectVersion=1.0
+Main Branch Name -  main
+
 
 ### 3. Generate Reports
 Run the generator script to create the `testExecutions` and `coverage` XML files:
@@ -44,13 +69,24 @@ python3 generate_reports.py
 ```
 
 ### 3. Run Analysis
-Use the SonarQube Scanner (via Docker) to submit the results:
+Use the SonarQube Scanner to submit the results:
+
+**With Docker:**
 ```bash
 docker run --rm \
   -v "$(pwd):/usr/src" \
   sonarsource/sonar-scanner-cli \
   -Dsonar.host.url=http://host.docker.internal:9000
 ```
+
+**With Podman:**
+```bash
+podman run --rm \
+  -v "$(pwd):/usr/src" \
+  sonarsource/sonar-scanner-cli \
+  -Dsonar.host.url=http://host.containers.internal:9000
+```
+*Note: Podman uses `host.containers.internal` instead of `host.docker.internal` for host communication.*
 
 ---
 
