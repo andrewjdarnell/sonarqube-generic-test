@@ -2,6 +2,34 @@
 
 This project demonstrates how to use SonarQube's **Generic Test Data** and **Generic Coverage** formats to import results from languages or tools that aren't natively supported (e.g., Terraform compliance tests) alongside standard languages like Python.
 
+## Quickstart
+
+From the repository root:
+
+```bash
+brew install python
+brew install uv
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform awscli
+
+uv venv .venv
+uv pip install --python .venv/bin/python pytest
+
+uv run --python .venv/bin/python pytest
+uv run --python .venv/bin/python generate_reports.py
+
+./build.sh
+
+docker compose up -d
+docker run --rm \
+  -v "$(pwd):/usr/src" \
+  sonarsource/sonar-scanner-cli \
+  -Dsonar.host.url=http://host.docker.internal:9000
+```
+You also need either Docker or Podman or other container runner installed. If its Docker, then Docker Desktop needs to be running.
+
+Note: `./build.sh` returns a non-zero exit code when any Terraform test file fails (expected if `s3_basic_failing.tftest.hcl` is enabled).
+
 ## Project Structure
 
 - `src/`: Python source code.
@@ -15,9 +43,57 @@ This project demonstrates how to use SonarQube's **Generic Test Data** and **Gen
 - `docker-compose.yml`: Spins up a local SonarQube and PostgreSQL instance.
 - `screenshots/`: Visual evidence of the SonarQube UI and results.
 
+## Tooling
+
+- **Python environment**: [`uv`](https://github.com/astral-sh/uv) using a local `.venv` in the repository root.
+- **Python test framework**: `pytest`.
+- **Terraform testing**: `terraform test` with per-file JUnit XML output from `build.sh`.
+- **JUnit to Sonar conversion**: `junit_to_sonar.py` converts JUnit XML to SonarQube generic `testExecutions` XML.
+- **Infrastructure tooling**: Terraform and AWS CLI.
+- **Analysis tooling**: SonarQube scanner via Docker/Podman.
+
 ## Getting Started
 
-### 1. Start SonarQube
+### 0. Install Required Tooling
+
+```bash
+brew install uv
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
+brew install awscli
+```
+
+Check versions:
+
+```bash
+python --version
+uv --version
+terraform --version
+aws --version
+```
+
+### 1. Create the Python Virtual Environment (uv)
+
+From the repository root:
+
+```bash
+uv venv .venv
+uv pip install --python .venv/bin/python pytest
+```
+
+Optional activation:
+
+```bash
+source .venv/bin/activate
+```
+
+If you do not activate the environment, run commands with `uv run`:
+
+```bash
+uv run --python .venv/bin/python pytest -q
+```
+
+### 2. Start SonarQube
 Ensure Docker Desktop or Podman is running, then start the environment:
 
 **With Docker Compose:**
@@ -32,7 +108,7 @@ podman-compose up -d
 
 Login at [http://localhost:9000](http://localhost:9000) (Default: `admin`/`admin`).
 
-### 2. Generate a Security Token
+### 3. Generate a Security Token
 You need a token to run the scanner. You can generate one via the UI or using the API:
 
 **Via API (Convenient for local testing):**
@@ -50,7 +126,7 @@ curl -u admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scann
 1. Go to **My Account** (top right) -> **Security**.
 2. Under **Generate Token**, give it a name and click **Generate**.
 
-### Update Admin Password
+### Update Admin Password (defaults are admin/admin)
 
 ### Create Local Project
 sonar.projectKey=sonarqube-generic-test (Project Key)
@@ -59,13 +135,58 @@ sonar.projectVersion=1.0
 Main Branch Name -  main
 
 
-### 3. Generate Reports
-Run the generator script to create the `testExecutions` and `coverage` XML files:
+### 4. Run Python Tests (pytest)
+
 ```bash
-python3 generate_reports.py
+uv run --python .venv/bin/python pytest
 ```
 
-### 3. Run Analysis
+### 5. Generate Reports
+Run the generator script to create the `testExecutions` and `coverage` XML files:
+```bash
+uv run --python .venv/bin/python generate_reports.py
+```
+
+### 6. Run Terraform Module Build and Test Reports
+
+The module build script runs:
+
+- `terraform init`
+- `terraform plan`
+- `terraform test` for each `.tftest.hcl` file
+- JUnit XML generation per test file
+- Sonar generic test execution XML conversion per test file
+
+```bash
+./build.sh
+```
+
+Generated outputs are written to `generated/`.
+
+#### build.sh details
+
+- Script path: `build.sh`.
+- Test discovery pattern: `core-cloud-s3-tf-module/tests/*.tftest.hcl`.
+- Per-test execution: each discovered test file is run individually using Terraform `-filter`.
+- JUnit output per test file: `*.junit.xml`.
+- Sonar generic execution output per test file: `*.sonar.xml` (via `junit_to_sonar.py`).
+- Aggregate test log: `terraform-test-results.txt`.
+- Plan artifacts: `terraform.plan` and `terraform-plan.txt`.
+
+Typical generated files:
+
+- `generated/kms_policy.junit.xml`
+- `generated/kms_policy.sonar.xml`
+- `generated/s3_basic.junit.xml`
+- `generated/s3_basic.sonar.xml`
+- `generated/terraform-test-results.txt`
+
+Exit behavior:
+
+- `0`: plan succeeds and all discovered test files pass.
+- Non-zero: plan fails, or at least one test file fails (for example `s3_basic_failing.tftest.hcl`).
+
+### 7. Run Analysis
 Use the SonarQube Scanner to submit the results:
 
 **With Docker:**
@@ -84,17 +205,6 @@ podman run --rm \
   -Dsonar.host.url=http://host.containers.internal:9000
 ```
 *Note: Podman uses `host.containers.internal` instead of `host.docker.internal` for host communication.*
-
-# Install Terraform and AWS CLI
-```
-brew tap hashicorp/tap
-brew install hashicorp/tap/terraform
-terraform -install-autocomplete
-brew install awscli
-terraform --version
-aws --version
-```
-*Note: The standard brew version of terraform is 1.5.7 which is pretty old... the current version is something like 1.14.7
 
 ---
 

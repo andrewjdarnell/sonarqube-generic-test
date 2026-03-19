@@ -20,6 +20,8 @@ coverage.xml
 *.tfvars
 *.tfvars.json
 .terraform.lock.hcl
+terraform.lock.hcl
+terraform.provider-*
 
 # SonarQube
 .scannerwork/
@@ -27,8 +29,8 @@ coverage.xml
 # Generated reports
 reports/*
 !reports/.gitkeep
-core-cloud-s3-tf-module/generated/*
-!core-cloud-s3-tf-module/generated/.gitkeep
+generated/*
+!generated/.gitkeep
 
 # OS specific
 .DS_Store

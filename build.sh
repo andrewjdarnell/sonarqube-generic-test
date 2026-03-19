@@ -2,6 +2,8 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$SCRIPT_DIR"
+MODULE_DIR="$REPO_ROOT/core-cloud-s3-tf-module"
 GENERATED_DIR="$SCRIPT_DIR/generated"
 PLAN_FILE="$GENERATED_DIR/terraform.plan"
 PLAN_TEXT_FILE="$GENERATED_DIR/terraform-plan.txt"
@@ -9,12 +11,33 @@ INIT_LOG_FILE="$GENERATED_DIR/terraform-init.txt"
 TEST_RESULTS_FILE="$GENERATED_DIR/terraform-test-results.txt"
 PLAN_VARS_FILE="$GENERATED_DIR/plan.auto.tfvars"
 TEST_DIR="tests"
-PLAN_PROVIDER_OVERRIDE_FILE="$SCRIPT_DIR/build-plan-provider-override.tf"
+PLAN_PROVIDER_OVERRIDE_FILE="$MODULE_DIR/build-plan-provider-override.tf"
+CONVERTER_SCRIPT="$REPO_ROOT/junit_to_sonar.py"
+PYTHON_BIN="$REPO_ROOT/.venv/bin/python"
 
 mkdir -p "$GENERATED_DIR"
 touch "$GENERATED_DIR/.gitkeep"
 
-cd "$SCRIPT_DIR"
+if [[ ! -f "$CONVERTER_SCRIPT" ]]; then
+  echo "Converter script not found at $CONVERTER_SCRIPT"
+  exit 1
+fi
+
+if [[ ! -d "$MODULE_DIR" ]]; then
+  echo "Terraform module directory not found at $MODULE_DIR"
+  exit 1
+fi
+
+if [[ ! -x "$PYTHON_BIN" ]]; then
+  if command -v python3 >/dev/null 2>&1; then
+    PYTHON_BIN="$(command -v python3)"
+  else
+    echo "Python interpreter not found. Expected $PYTHON_BIN or python3 in PATH."
+    exit 1
+  fi
+fi
+
+cd "$MODULE_DIR"
 
 # Provide non-sensitive local defaults so provider initialization works during CI/local tests.
 export AWS_ACCESS_KEY_ID="mock_access_key"
@@ -97,6 +120,7 @@ for test_file in "${TEST_FILES[@]}"; do
   test_name="$(basename "$test_file")"
   per_test_log="$GENERATED_DIR/${test_name%.tftest.hcl}.test.txt"
   per_test_junit_xml="$GENERATED_DIR/${test_name%.tftest.hcl}.junit.xml"
+  per_test_sonar_xml="$GENERATED_DIR/${test_name%.tftest.hcl}.sonar.xml"
 
   echo "Running terraform test for $test_name"
   {
@@ -109,8 +133,11 @@ for test_file in "${TEST_FILES[@]}"; do
   test_exit_code=${PIPESTATUS[0]}
   set -e
 
+  "$PYTHON_BIN" "$CONVERTER_SCRIPT" "$per_test_junit_xml" "$per_test_sonar_xml"
+
   cat "$per_test_log" >> "$TEST_RESULTS_FILE"
   echo "JUnit XML: $per_test_junit_xml" | tee -a "$TEST_RESULTS_FILE"
+  echo "Sonar XML: $per_test_sonar_xml" | tee -a "$TEST_RESULTS_FILE"
 
   if [[ $test_exit_code -ne 0 ]]; then
     FAILED_TESTS=$((FAILED_TESTS + 1))
