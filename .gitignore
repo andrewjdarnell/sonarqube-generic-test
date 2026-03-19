@@ -27,6 +27,8 @@ coverage.xml
 # Generated reports
 reports/*
 !reports/.gitkeep
+core-cloud-s3-tf-module/generated/*
+!core-cloud-s3-tf-module/generated/.gitkeep
 
 # OS specific
 .DS_Store

@@ -85,6 +85,17 @@ podman run --rm \
 ```
 *Note: Podman uses `host.containers.internal` instead of `host.docker.internal` for host communication.*
 
+# Install Terraform and AWS CLI
+```
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
+terraform -install-autocomplete
+brew install awscli
+terraform --version
+aws --version
+```
+*Note: The standard brew version of terraform is 1.5.7 which is pretty old... the current version is something like 1.14.7
+
 ---
 
 ## Visual Results & Observations
