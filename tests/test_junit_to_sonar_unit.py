@@ -35,12 +35,18 @@ class TestJunitToSonarUnit(unittest.TestCase):
         self.assertEqual(test_cases[0].attrib["name"], "passing")
         self.assertEqual(test_cases[0].attrib["duration"], "100")
 
-        self.assertIsNotNone(test_cases[1].find("failure"))
-        self.assertIn("failed assertion", (test_cases[1].find("failure").text or ""))
-        self.assertIn("details text", (test_cases[1].find("failure").text or ""))
+        failure_el = test_cases[1].find("failure")
+        self.assertIsNotNone(failure_el)
+        self.assertEqual(failure_el.attrib.get("message"), "failed assertion")
+        self.assertIn("details text", (failure_el.text or ""))
 
-        self.assertIsNotNone(test_cases[2].find("error"))
-        self.assertIsNotNone(test_cases[3].find("skipped"))
+        error_el = test_cases[2].find("error")
+        self.assertIsNotNone(error_el)
+        self.assertEqual(error_el.attrib.get("message"), "runtime error")
+
+        skipped_el = test_cases[3].find("skipped")
+        self.assertIsNotNone(skipped_el)
+        self.assertEqual(skipped_el.attrib.get("message"), "not applicable")
 
     def test_uses_testsuite_name_when_classname_missing(self):
         junit_xml = """
@@ -67,6 +73,26 @@ class TestJunitToSonarUnit(unittest.TestCase):
         file_node = out_root.find("file")
         self.assertIsNotNone(file_node)
         self.assertEqual(file_node.attrib["path"], "from-input.xml")
+
+    def test_status_message_falls_back_to_details_when_missing(self):
+        junit_xml = """
+        <testsuite name="tests/fallback_message.tftest.hcl">
+          <testcase name="case1" time="0.01">
+            <failure>details only text</failure>
+          </testcase>
+        </testsuite>
+        """
+        root = ET.fromstring(junit_xml)
+        out_root = junit_root_to_sonar_test_executions(root)
+
+        file_node = out_root.find("file")
+        self.assertIsNotNone(file_node)
+        test_case = file_node.find("testCase")
+        self.assertIsNotNone(test_case)
+        failure_el = test_case.find("failure")
+        self.assertIsNotNone(failure_el)
+        self.assertEqual(failure_el.attrib.get("message"), "details only text")
+        self.assertEqual((failure_el.text or "").strip(), "details only text")
 
 
 if __name__ == "__main__":

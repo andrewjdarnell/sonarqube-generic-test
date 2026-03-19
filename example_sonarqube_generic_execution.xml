@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+  <file path="tests/s3_basic.tftest.hcl">
+    <testCase name="validate_bucket_creation" duration="21"/>
+    <testCase name="validate_kms_key_creation" duration="24">
+      <failure message="1 of 3 assertions failed">Expected deletion_window_in_days=30 but got 7</failure>
+    </testCase>
+    <testCase name="validate_kms_alias" duration="23"/>
+  </file>
+  <file path="tests/s3_security.tftest.hcl">
+    <testCase name="validate_kms_encryption" duration="17"/>
+    <testCase name="validate_aes256_encryption" duration="18">
+      <skipped message="Skipped in this run">Feature flag disabled for AES256 path</skipped>
+    </testCase>
+    <testCase name="validate_public_access_block_all_enabled" duration="19">
+      <error message="Runtime error">Provider returned an unexpected response while evaluating resource graph</error>
+    </testCase>
+  </file>
+</testExecutions>

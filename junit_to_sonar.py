@@ -52,7 +52,7 @@ def _select_file_path(testcase: ET.Element, testsuite: ET.Element, fallback_path
 
 
 # Copy the first non-pass status node from JUnit onto a Sonar testCase.
-# from: <failure message="m">details</failure> -> to: <failure>m\ndetails</failure>
+# from: <failure message="m">details</failure> -> to: <failure message="m">details</failure>
 def _append_status_if_any(source_testcase: ET.Element, target_testcase: ET.Element) -> None:
     for tag_name in ("failure", "error", "skipped"):
         status = source_testcase.find(tag_name)
@@ -63,11 +63,16 @@ def _append_status_if_any(source_testcase: ET.Element, target_testcase: ET.Eleme
         message = status.get("message", "").strip()
         details = (status.text or "").strip()
 
-        if message and details:
-            status_el.text = f"{message}\n{details}"
-        elif message:
-            status_el.text = message
-        elif details:
+        # Sonar generic execution format requires a short status message.
+        if not message:
+            if details:
+                message = details.splitlines()[0].strip() or f"{tag_name} reported"
+            else:
+                message = f"{tag_name} reported"
+
+        status_el.set("message", message)
+
+        if details:
             status_el.text = details
         return
 

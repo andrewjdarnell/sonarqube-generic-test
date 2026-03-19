@@ -19,14 +19,25 @@ uv run --python .venv/bin/python pytest
 uv run --python .venv/bin/python generate_reports.py
 
 ./build.sh
-
-docker compose up -d
-docker run --rm \
-  -v "$(pwd):/usr/src" \
-  sonarsource/sonar-scanner-cli \
-  -Dsonar.host.url=http://host.docker.internal:9000
 ```
-You also need either Docker or Podman or other container runner installed. If its Docker, then Docker Desktop needs to be running.
+
+You also need either docker  or podman to be installed
+If its Docker, you also need Docker-Desktop to be running.
+
+Then bring up the SonarQube Server with
+```
+docker compose up -d
+```
+
+and submit the generated results with 
+```
+./submit_results_d.sh
+```
+or for podman
+```
+./submit_results_p.sh
+```
+
 
 Note: `./build.sh` returns a non-zero exit code when any Terraform test file fails (expected if `s3_basic_failing.tftest.hcl` is enabled).
 
@@ -108,19 +119,26 @@ podman-compose up -d
 
 Login at [http://localhost:9000](http://localhost:9000) (Default: `admin`/`admin`).
 
-### 3. Generate a Security Token
-You need a token to run the scanner. You can generate one via the UI or using the API:
+### 3. Generate a Security Token Via the API
+(the scanner. You can also generate one via the UI. If one is already created the command will fail. Check at http://localhost:9000/account/security
 
-**Via API (Convenient for local testing):**
-```bash
-curl -u admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scanner-token"
-```
 
 **Extract and save the token to .env using jq:**
 ```bash
 curl -u admin -X POST "http://localhost:9000/api/user_tokens/generate?name=scanner-token" | jq -r '.token' | xargs -I{} sh -c 'echo SONAR_TOKEN={} > .env'
 ```
-*Note: This command uses jq to cleanly extract the token from the JSON response and writes it to the .env file. You can then reference SONAR_TOKEN in your sonar-project.properties.*
+*Note: This command uses jq to cleanly extract the token from the JSON response and writes it to the .env file. if you then include  '--env-file .env' in your docker command, you can then reference SONAR_TOKEN in your sonar-project.properties.* with sonar.token=${SONAR_TOKEN}
+
+
+Then apply the minimum recommended baseline hardening of:
+
+```bash
+chmod 600 .env
+```
+
+Why this is reasonable: `.env` is already ignored by `.gitignore`, and `chmod 600` limits read/write access to your user account only.
+
+See the bottom of the Readme for an alternative solution
 
 **Via UI:**
 1. Go to **My Account** (top right) -> **Security**.
@@ -189,20 +207,27 @@ Exit behavior:
 ### 7. Run Analysis
 Use the SonarQube Scanner to submit the results:
 
+*Note: In the Docker command, `--rm` removes the container automatically when it exits, and `-v "$(pwd):/usr/src"` mounts your current project directory into the container so the scanner can read your source files and report XML files.*
+
+Recommended helper scripts:
+
+- Docker: `./submit_results_d.sh`
+- Podman: `./submit_results_p.sh`
+
+Both scripts forward extra scanner arguments, for example:
+
+```bash
+./submit_results_d.sh -Dsonar.log.level=DEBUG
+```
+
 **With Docker:**
 ```bash
-docker run --rm \
-  -v "$(pwd):/usr/src" \
-  sonarsource/sonar-scanner-cli \
-  -Dsonar.host.url=http://host.docker.internal:9000
+./submit_results_d.sh
 ```
 
 **With Podman:**
 ```bash
-podman run --rm \
-  -v "$(pwd):/usr/src" \
-  sonarsource/sonar-scanner-cli \
-  -Dsonar.host.url=http://host.containers.internal:9000
+./submit_results_p.sh
 ```
 *Note: Podman uses `host.containers.internal` instead of `host.docker.internal` for host communication.*
 
@@ -239,3 +264,37 @@ To achieve a successful generic test submission, we followed these key architect
     - **Test files** (like `compliance_test.tf`) show **Execution Results** (pass/fail counts).
 5.  **UI Optimization**: Enhanced the XML report with `classname` attributes and explicitly included test patterns in `sonar.test.inclusions` to ensure the SonarQube UI correctly attributed results to the appropriate components.
 6.  **Scanner-to-Host Communication**: Configured the Docker-based scanner to communicate with the host-bound SonarQube instance using `host.docker.internal`, allowing for a seamless local development loop.
+
+## Bonus points: Keychain-based token storage (macOS)
+
+If you want to avoid storing the token in `.env`, you can store it in macOS Keychain and inject it at runtime.
+
+1. Save token in Keychain once:
+
+```bash
+security add-generic-password -a "$USER" -s sonar_token -w "<your-sonar-token>" -U
+```
+
+2. Export token into your shell for the current session:
+
+```bash
+export SONAR_TOKEN="$(security find-generic-password -a "$USER" -s sonar_token -w)"
+```
+
+3. Use scanner commands with environment passthrough instead of `--env-file .env`:
+
+```bash
+docker run --rm \
+  -e SONAR_TOKEN \
+  -v "$(pwd):/usr/src" \
+  sonarsource/sonar-scanner-cli \
+  -Dsonar.host.url=http://host.docker.internal:9000
+```
+
+```bash
+podman run --rm \
+  -e SONAR_TOKEN \
+  -v "$(pwd):/usr/src" \
+  sonarsource/sonar-scanner-cli \
+  -Dsonar.host.url=http://host.containers.internal:9000
+```
