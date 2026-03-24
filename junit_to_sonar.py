@@ -83,6 +83,7 @@ def _append_status_if_any(source_testcase: ET.Element, target_testcase: ET.Eleme
 def junit_root_to_sonar_test_executions(
     junit_root: ET.Element,
     fallback_test_file_path: str = "",
+    prefix: str = "",
 ) -> ET.Element:
     output_root = ET.Element("testExecutions", version="1")
     output_file_nodes: dict[str, ET.Element] = {}
@@ -90,7 +91,9 @@ def junit_root_to_sonar_test_executions(
     for testsuite in _iter_test_suites(junit_root):
         for testcase in testsuite.findall("testcase"):
             file_path = _select_file_path(testcase, testsuite, fallback_test_file_path)
-
+            if prefix and not file_path.startswith(prefix):
+                file_path = f"{prefix}/{file_path}".replace("//", "/")
+            
             if file_path not in output_file_nodes:
                 output_file_nodes[file_path] = ET.SubElement(output_root, "file", path=file_path)
 
@@ -107,7 +110,7 @@ def junit_root_to_sonar_test_executions(
 
 # Convert one on-disk JUnit XML file into one Sonar generic execution XML file.
 # from: input junit.xml -> to: output sonar-test-executions.xml
-def convert_junit_file_to_sonar_generic(input_path: str | Path, output_path: str | Path) -> None:
+def convert_junit_file_to_sonar_generic(input_path: str | Path, output_path: str | Path, prefix: str = "") -> None:
     input_path = Path(input_path)
     output_path = Path(output_path)
 
@@ -117,6 +120,7 @@ def convert_junit_file_to_sonar_generic(input_path: str | Path, output_path: str
     sonar_root = junit_root_to_sonar_test_executions(
         junit_root,
         fallback_test_file_path=input_path.name,
+        prefix=prefix,
     )
 
     output_tree = ET.ElementTree(sonar_root)
@@ -132,6 +136,7 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("input", help="Path to the input JUnit XML file.")
     parser.add_argument("output", help="Path to write Sonar generic test execution XML.")
+    parser.add_argument("--prefix", default="", help="Prefix to prepend to relative test paths.")
     return parser
 
 
@@ -139,7 +144,7 @@ def _build_parser() -> argparse.ArgumentParser:
 # from: python junit_to_sonar.py in.xml out.xml -> to: writes converted XML and exits 0
 def main() -> int:
     args = _build_parser().parse_args()
-    convert_junit_file_to_sonar_generic(args.input, args.output)
+    convert_junit_file_to_sonar_generic(args.input, args.output, args.prefix)
     return 0
 
 

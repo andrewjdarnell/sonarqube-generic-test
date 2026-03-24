@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euxo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
@@ -25,6 +25,7 @@ docker run --rm \
   --env-file .env \
   -v "$PWD:/usr/src" \
   sonarsource/sonar-scanner-cli \
+  --debug \
   -Dsonar.host.url=http://host.docker.internal:9000 \
   -Dsonar.testExecutionReportPaths="$TEST_PATHS" \
   "$@"

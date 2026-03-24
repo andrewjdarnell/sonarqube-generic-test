@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(dirname "$0")"
 REPO_ROOT="$SCRIPT_DIR"
-MODULE_DIR="$REPO_ROOT/core-cloud-s3-tf-module"
+MODULE_NAME="core-cloud-s3-tf-module"
+MODULE_DIR="$REPO_ROOT/$MODULE_NAME"
 GENERATED_DIR="$SCRIPT_DIR/generated"
 PLAN_FILE="$GENERATED_DIR/terraform.plan"
 PLAN_TEXT_FILE="$GENERATED_DIR/terraform-plan.txt"
@@ -133,7 +134,7 @@ for test_file in "${TEST_FILES[@]}"; do
   test_exit_code=${PIPESTATUS[0]}
   set -e
 
-  "$PYTHON_BIN" "$CONVERTER_SCRIPT" "$per_test_junit_xml" "$per_test_sonar_xml"
+  "$PYTHON_BIN" "$CONVERTER_SCRIPT" "$per_test_junit_xml" "$per_test_sonar_xml" --prefix "$MODULE_NAME"
 
   cat "$per_test_log" >> "$TEST_RESULTS_FILE"
   echo "JUnit XML: $per_test_junit_xml" | tee -a "$TEST_RESULTS_FILE"
