@@ -7,16 +7,16 @@ This project demonstrates how to use SonarQube's **Generic Test Data** and **Gen
 From the repository root:
 
 ```bash
-brew install python
+brew install python3
 brew install uv
 brew tap hashicorp/tap
 brew install hashicorp/tap/terraform awscli
 
-uv venv .venv
-uv pip install --python .venv/bin/python pytest
+uv venv --python python3 .venv
+uv pip install pytest
 
-uv run --python .venv/bin/python pytest
-uv run --python .venv/bin/python generate_reports.py
+uv run pytest
+uv run generate_reports.py
 
 ./build.sh
 ```
@@ -77,7 +77,7 @@ brew install awscli
 Check versions:
 
 ```bash
-python --version
+python3 --version
 uv --version
 terraform --version
 aws --version
@@ -88,8 +88,8 @@ aws --version
 From the repository root:
 
 ```bash
-uv venv .venv
-uv pip install --python .venv/bin/python pytest
+uv venv --python python3 .venv
+uv pip install pytest
 ```
 
 Optional activation:
@@ -101,7 +101,7 @@ source .venv/bin/activate
 If you do not activate the environment, run commands with `uv run`:
 
 ```bash
-uv run --python .venv/bin/python pytest -q
+uv run pytest -q
 ```
 
 ### 2. Start SonarQube
@@ -156,13 +156,13 @@ Main Branch Name -  main
 ### 4. Run Python Tests (pytest)
 
 ```bash
-uv run --python .venv/bin/python pytest
+uv run pytest
 ```
 
 ### 5. Generate Reports
 Run the generator script to create the `testExecutions` and `coverage` XML files:
 ```bash
-uv run --python .venv/bin/python generate_reports.py
+uv run generate_reports.py
 ```
 
 ### 6. Run Terraform Module Build and Test Reports
@@ -298,3 +298,36 @@ podman run --rm \
   sonarsource/sonar-scanner-cli \
   -Dsonar.host.url=http://host.containers.internal:9000
 ```
+
+# Note - sonar.testExecutionReportPaths does not support a wildcard
+The sonar.testExecutionReportPaths parameter typically requires explicit paths and often does not support wildcards for generic test execution reports. To include multiple reports, comma-separate the specific, absolute, or relative file paths instead of using glob patterns.
+
+[Sonar Community](https://community.sonarsource.com/t/does-sonar-testexecutionreportpaths-support-wildcard/104525)
+https://stackoverflow.com/questions/57466369/
+
+sonarqube-test-report-report-refers-to-a-file-which-is-not-configured-as-a-test#:~:text=You%20might%20get%20an%20error%20message%20that,*%20sonar.test.inclusions=src/__test__/**/*.test.ts%2Csrc/**/*.spec.ts%20*%20Adding%20sonar.tests=.(same%20as%20sonar.sources)
+
+https://docs.sonarsource.com/sonarqube-server/2025.4/analyzing-source-code/test-coverage/test-execution-parameters
+
+Key Considerations for sonar.testExecutionReportPaths:
+
+No Wildcards: If wildcards are not explicitly noted for a property in SonarQube documentation, they are not supported.
+
+Comma-Delimited List: Use sonar.testExecutionReportPaths=report1.xml,report2.xml.
+
+Alternative Properties: Other parameters, such as sonar.cs.xunit.reportsPaths or sonar.python.xunit.reportPath, do support wildcards, notes Sonar Documentation.
+
+## Debugging
+Use the -X switch in SonarScanner to debug file path resolution, suggest Sonar Community.
+
+## Workaround
+Use a script to consolidate multiple report files into a single report, or pass the full list of files in the analysis command, according to this Stack Overflow post. 
+
+# Cause of the Error
+The cause of the error FileNotFoundException: /usr/src/generated/*.sonar.xml is actually a known limitation of SonarQube: the sonar.testExecutionReportPaths parameter does not support wildcards. Because it couldn't expand the *.sonar.xml glob, the scanner treated it as a literal file name and tried to open a file explicitly named *.sonar.xml, which caused the crash.
+
+## How I fixed it
+
+I removed the wildcard generated/*.sonar.xml from sonar-project.properties.
+
+I updated both submit_results_d.sh and submit_results_p.sh so that before starting the Docker/Podman container, they dynamically find all .sonar.xml files in the generated/ directory, concatenate them into a comma-separated list, and explicitly pass them to the scanner via -Dsonar.testExecutionReportPaths.
