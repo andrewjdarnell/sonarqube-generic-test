@@ -14,7 +14,7 @@ def generate_test_execution_report(output_file):
         ET.SubElement(file_el, "testCase", name="test_skipped", duration="50", classname=classname)
 
     # 2. Terraform Compliance Tests (Mapped to the actual .tf file)
-    tf_test_file = "terraform/tests/compliance_test.tf"
+    tf_test_file = "terraform/tests/compliance_test.tftest.hcl"
     file_el = ET.SubElement(root, "file", path=tf_test_file)
     tf_classname = "Terraform.ComplianceTests"
     ET.SubElement(file_el, "testCase", name="bucket_is_private", duration="150", classname=tf_classname)
