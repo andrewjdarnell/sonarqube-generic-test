@@ -4,6 +4,9 @@ set -euxo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
+mkdir -p generated
+exec > >(tee generated/sonar-submit.log) 2>&1
+
 if ! command -v podman >/dev/null 2>&1; then
   echo "Error: podman is not installed or not in PATH." >&2
   exit 1

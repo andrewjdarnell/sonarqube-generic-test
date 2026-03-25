@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -euxo pipefail
 
-SCRIPT_DIR="$(dirname "$0")"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$SCRIPT_DIR"
 MODULE_NAME="core-cloud-s3-tf-module"
 MODULE_DIR="$REPO_ROOT/$MODULE_NAME"
@@ -114,11 +114,12 @@ fi
 FAILED_TESTS=0
 {
   echo "Terraform test run started at $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+  echo "Running terraform tests from $TEST_DIR directory..."
   echo "Found ${#TEST_FILES[@]} test files"
 } > "$TEST_RESULTS_FILE"
 
 for test_file in "${TEST_FILES[@]}"; do
-  test_name="$(basename "$test_file")"
+  test_name="$(basename "$test_file")" 
   per_test_log="$GENERATED_DIR/${test_name%.tftest.hcl}.test.txt"
   per_test_junit_xml="$GENERATED_DIR/${test_name%.tftest.hcl}.junit.xml"
   per_test_sonar_xml="$GENERATED_DIR/${test_name%.tftest.hcl}.sonar.xml"
@@ -130,7 +131,7 @@ for test_file in "${TEST_FILES[@]}"; do
   } | tee -a "$TEST_RESULTS_FILE"
 
   set +e
-  terraform test -no-color -test-directory="$TEST_DIR" -filter="$test_file" -junit-xml="$per_test_junit_xml" | tee "$per_test_log"
+  terraform test --verbose -no-color -test-directory="$TEST_DIR" -filter="$test_file" -junit-xml="$per_test_junit_xml" | tee "$per_test_log"
   test_exit_code=${PIPESTATUS[0]}
   set -e
 
