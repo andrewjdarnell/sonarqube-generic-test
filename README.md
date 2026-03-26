@@ -263,11 +263,11 @@ Both scripts forward extra scanner arguments, for example:
 *Detailed view of Terraform test components*
 
 ### 4. Terraform UnitTests
-![Terrafor UnitTests](screenshots/Screenshot_04_Terrafor_UnitTests.png)
+![Terraform UnitTests](screenshots/Screenshot_04_Terraform_UnitTests.png)
 *View of Terraform UnitTests - this was converted from a real terraform test run using junit_to_sonar.py*
 
 ### 5. Terraform UnitTest Failures
-![TerrUnitTestFailures](screenshots/Screenshot_05_TerrUnitTestFailures.png)
+![Terraform UnitTest Failures](screenshots/Screenshot_05_Terraform_UnitTestFailures.png)
 *View of Terraform UnitTest Failures - this was converted from a real terraform test run using junit_to_sonar.py* 
 
 ### 6. Treemap
@@ -279,7 +279,9 @@ Both scripts forward extra scanner arguments, for example:
 *View of ActivityGraph*
 
 ## Conclusion
-** We have successfully demonstrated the ability to submit generic test results to SonarQube. **
+
+**We have successfully demonstrated the ability to submit generic test results to SonarQube.**
+
 **What we see is that SonarQube file viewer is not showing the unit test results per unit test, only at an overall file level.**
 
 ---
