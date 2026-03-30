@@ -22,9 +22,14 @@ uv venv --python python3 .venv
 uv pip install pytest
 
 uv run pytest
+
+# Generate the fake reports to just check that we understand the working format
 uv run generate_reports.py
 
+# Run terraform test, produce junit output then build sonarqube generic test excecution file from it.
 ./build.sh
+
+
 ```
 
 You also need either Docker or Podman to be installed.
@@ -35,6 +40,7 @@ Then bring up the SonarQube Server with:
 docker compose up -d
 ```
 And submit the generated results with:
+Note: this gathers a list of files to submit as rexexps don't work for sonarqube generic test execution
 ```bash
 ./submit_results_d.sh
 ```
@@ -52,11 +58,17 @@ Note: `./build.sh` returns a non-zero exit code when any Terraform test file fai
 - `terraform/`: Terraform configuration (`main.tf`).
 - `terraform/tests/`: Terraform compliance tests (`compliance_test.tf`).
 - `reports/`: Generated XML reports for SonarQube ingestion.
-- `generate_reports.py`: Python script to generate SonarQube-compatible XML.
+- `junit_to_sonar.py`: Python script to generate SonarQube-compatible XML from junit format.
 - `sonar-project.properties`: Configuration for the SonarQube scanner.
 - `scanner_debug.log`: Full verbose output from the SonarQube scanner for deep analysis.
 - `docker-compose.yml`: Spins up a local SonarQube and PostgreSQL instance.
 - `screenshots/`: Visual evidence of the SonarQube UI and results.
+- `generate_reports.py`: Generate fake data in the right format.
+- `build.sh`: Run Terraform test and generate sonarqube generic test execution file from it.
+- `submit_results_d.sh`: Submit the generated results to SonarQube using Docker.
+- `submit_results_p.sh`: Submit the generated results to SonarQube using Podman.
+- `validate_sonar_xml.py`: Check the for correct format against the xsd schema.
+
 
 ## Tooling
 
